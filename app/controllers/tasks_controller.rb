@@ -5,6 +5,9 @@ class TasksController < ApplicationController
   before_action :find_task,
                 only: %i[show edit update complete uncomplete destroy]
 
+  # after_action :redirect_to_tasks,
+  #              only: %i[complete uncomplete destroy]
+
   def index
     @tasks = Task.all
   end
@@ -59,4 +62,8 @@ class TasksController < ApplicationController
   def find_task
     @task = Task.find(params[:id])
   end
+
+  # def redirect_to_tasks
+  #   redirect_to tasks_path
+  # end
 end
