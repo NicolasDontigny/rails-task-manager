@@ -2,16 +2,17 @@
 
 # Tasks Controller
 class TasksController < ApplicationController
+  before_action :find_task,
+                only: %i[show edit update complete uncomplete destroy]
+
   def index
     @tasks = Task.all
   end
 
-  def show
-    @task = Task.find(params[:id])
-  end
+  def show; end
 
   def new
-    # no code needed
+    @task = Task.new
   end
 
   def create
@@ -21,44 +22,41 @@ class TasksController < ApplicationController
     redirect_to task_path(new_task)
   end
 
-  def edit
-    @task = Task.find(params[:id])
-  end
+  def edit; end
 
   def update
-    task = Task.find(params[:id])
     new_task_attributes = params.require(:task).permit(:title, :details)
 
-    task.update(new_task_attributes)
+    @task.update(new_task_attributes)
 
-    redirect_to task_path(task)
+    redirect_to task_path(@task)
   end
 
   def complete
-    task = Task.find(params[:id])
+    @task.completed = true
 
-    task.completed = true
-
-    task.save
+    @task.save
 
     redirect_to tasks_path
   end
 
   def uncomplete
-    task = Task.find(params[:id])
+    @task.completed = false
 
-    task.completed = false
-
-    task.save
+    @task.save
 
     redirect_to tasks_path
   end
 
   def destroy
-    task = Task.find(params[:id])
-
-    task.destroy
+    @task.destroy
 
     redirect_to tasks_path
+  end
+
+  private
+
+  def find_task
+    @task = Task.find(params[:id])
   end
 end
