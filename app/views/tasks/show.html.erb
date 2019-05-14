@@ -1,0 +1,18 @@
+<div class="header d-flex justify-content-between align-items-center">
+  <h1><%= @task.title %></h1>
+  <%= link_to task_edit_path(@task), { class: "btn btn-warning" } do %>
+    <i class='far fa-edit'></i> Edit this task
+  <% end %>
+</div>
+
+<div class="details-container">
+  <%= @task.details %>
+</div>
+
+<div class="completed-container border-bottom">
+  <% if @task.completed %>
+    <i class="far fa-check-square"></i> This task is completed
+  <% else %>
+    <i class="far fa-square"></i> This task is not completed yet
+  <% end %>
+</div>
